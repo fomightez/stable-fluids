@@ -6,7 +6,13 @@ An adaptation of Jos Stam's stable fluids to Python/NumPy by [Gregory Johnson](h
 I have forked it and 'binderized' it to work via MyBinder.org and hacked around some. See the original [here](https://github.com/GregTJ/stable-fluids).
 
 Click a 'launch binder' badge on this page to begin an active session where all the necessary dependencies are set to run.
+
+
 ------
+
+## n-D stable fluids
+
+Example from original source:
 
 ![](test.gif)
 

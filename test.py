@@ -1,5 +1,6 @@
 import numpy as np
 from PIL import Image
+import sys
 
 from fluid import Fluid
 
@@ -39,8 +40,7 @@ for i, p in enumerate(points):
     inflow_dye_field[..., i][_ <= INFLOW_RADIUS] = 1
 
 for frame in range(DURATION):
-    print(f'Computing frame {frame}.')
-
+    sys.stderr.write(f'Computing frame {frame}.\n')
     fluid.advect_diffuse()
 
     if frame <= INFLOW_DURATION:

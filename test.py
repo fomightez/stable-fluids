@@ -6,7 +6,7 @@ from fluid import Fluid
 
 FRAME_PATH = 'placeholder'
 
-RESOLUTION = (700, 700)
+RESOLUTION = 700, 700
 VISCOSITY = 10 ** -3
 DURATION = 200
 
@@ -20,24 +20,24 @@ def circle(theta):
     return np.asarray((np.cos(theta), np.sin(theta)))
 
 
-center = np.asarray(RESOLUTION) // 2
+center = np.floor_divide(RESOLUTION, 2)
 r = np.min(center) - INFLOW_PADDING
 directions = tuple(-circle(p * np.pi * 2 / 3) for p in range(3))
 points = tuple(r * circle(p * np.pi * 2 / 3) + center for p in range(3))
 
-channels = ('r', 'g', 'b')
+channels = 'r', 'g', 'b'
 fluid = Fluid(RESOLUTION, VISCOSITY, channels)
 
 inflow_dye_field = np.zeros((fluid.size, len(channels)))
 inflow_velocity_field = np.zeros_like(fluid.velocity_field)
 for i, p in enumerate(points):
-    _ = np.dstack(tuple(fluid.indices[..., d] - p[d] for d in range(2)))
-    _ = np.linalg.norm(_.squeeze(), axis=1)
+    distance = np.linalg.norm(fluid.indices - p, axis=1)
+    mask = distance <= INFLOW_RADIUS
 
     for d in range(2):
-        inflow_velocity_field[..., d][_ <= INFLOW_RADIUS] = directions[i][d] * INFLOW_VELOCITY
+        inflow_velocity_field[..., d][mask] = directions[i][d] * INFLOW_VELOCITY
 
-    inflow_dye_field[..., i][_ <= INFLOW_RADIUS] = 1
+    inflow_dye_field[..., i][mask] = 1
 
 for frame in range(DURATION):
     sys.stderr.write(f'Computing frame {frame}.\n')

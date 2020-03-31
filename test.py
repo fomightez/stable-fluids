@@ -40,7 +40,7 @@ for i, p in enumerate(points):
     inflow_dye_field[..., i][mask] = 1
 
 for frame in range(DURATION):
-    sys.stderr.write(f'Computing frame {frame}.\n')
+    sys.stderr.write(f'Computing frame {frame+1}.\n')
     fluid.advect_diffuse()
 
     if frame <= INFLOW_DURATION:
@@ -55,5 +55,6 @@ for frame in range(DURATION):
 
     rgb = rgb.reshape((*RESOLUTION, 3))
     rgb = (np.clip(rgb, 0, 1) * 255).astype('uint8')
-    Image.fromarray(rgb).save(f'{FRAME_PATH}frame {frame}.png')
+    frame_as_three_digits = f"{frame+1}".zfill(3)
+    Image.fromarray(rgb).save(f'{FRAME_PATH}frame{frame}.png')
 

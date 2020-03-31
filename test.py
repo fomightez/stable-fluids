@@ -56,5 +56,5 @@ for frame in range(DURATION):
     rgb = rgb.reshape((*RESOLUTION, 3))
     rgb = (np.clip(rgb, 0, 1) * 255).astype('uint8')
     frame_as_three_digits = f"{frame+1}".zfill(3)
-    Image.fromarray(rgb).save(f'{FRAME_PATH}frame{frame}.png')
+    Image.fromarray(rgb).save(f'{FRAME_PATH}frame{frame_as_three_digits}.png')
 

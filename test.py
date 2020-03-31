@@ -55,5 +55,5 @@ for frame in range(DURATION):
 
     rgb = rgb.reshape((*RESOLUTION, 3))
     rgb = (np.clip(rgb, 0, 1) * 255).astype('uint8')
-    Image.fromarray(rgb).save(f'{FRAME_PATH}frame_{frame}.png')
+    Image.fromarray(rgb).save(f'{FRAME_PATH}frame {frame}.png')
 
